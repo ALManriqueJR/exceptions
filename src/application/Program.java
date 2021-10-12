@@ -3,46 +3,56 @@ package application;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.entities.Reservation;
+import model.exceptions.DomainException;
 
 public class Program {
 
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 		Scanner sc = new Scanner(System.in);
-
-		System.out.print("Room number: ");
-		int number = sc.nextInt();
-		sc.nextLine();
-		System.out.print("Check-In date (dd/MM/yyyy) : ");
-		Date checkIn = sdf.parse(sc.next());
-		System.out.print("Check-Out date (dd/MM/yyyy) : ");
-		Date checkOut = sdf.parse(sc.next());
-
-		if (!checkOut.after(checkIn)) {
-			System.out.println("Error in reservation: Check-out date must be after check-in date");
-		} else {
+		
+		try {
+			System.out.print("Room number: ");
+			int number = sc.nextInt();
+			sc.nextLine();
+			System.out.print("Check-In date (dd/MM/yyyy) : ");
+			Date checkIn = sdf.parse(sc.next());
+			System.out.print("Check-Out date (dd/MM/yyyy) : ");
+			Date checkOut = sdf.parse(sc.next());
+	
 			Reservation reservation = new Reservation(number, checkIn, checkOut);
 			System.out.println("Reservation: " + reservation);
-
+	
 			System.out.println("\nEnter date to update the reservation: ");
 			System.out.print("Check-In date (dd/MM/yyyy) : ");
 			checkIn = sdf.parse(sc.next());
 			System.out.print("Check-Out date (dd/MM/yyyy) : ");
 			checkOut = sdf.parse(sc.next());
-
-			String error = reservation.updateDates(checkIn, checkOut);
-
-			if (error != null) {
-				System.out.println("Error in Reservation:" + error);
-			} else {
-				System.out.println("Reservation: " + reservation);
-			}
+	
+			reservation.updateDates(checkIn, checkOut);
+	
+			System.out.println("Reservation: " + reservation);
 		}
+		catch(ParseException e) {
+			System.out.println("Invalid date format");
+			e.printStackTrace();
+		}
+		catch(DomainException e) {
+			System.out.println("Error in Reservation:" + e.getMessage());
+			e.printStackTrace();
+		}
+		//exceções menores como o inputmismatchexception estão dentro de Exception>dentro de RuntimeException, logo num upcasting elas se encaixam no runtime generico aqui embaixo
+		catch(RuntimeException e) {
+			System.out.println("Unexpected erro occur!");
+			e.printStackTrace();
+		}
+
 		sc.close();
 	}
 
