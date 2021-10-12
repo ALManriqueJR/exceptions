@@ -42,7 +42,6 @@ public class Program {
 			} else {
 				System.out.println("Reservation: " + reservation);
 			}
-
 		}
 		sc.close();
 	}

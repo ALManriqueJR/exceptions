@@ -36,12 +36,12 @@ public class Reservation {
 		return checkOut;
 	}
 
-	// long � o inteiro mais longo pq esta se calculando diferen�a entre datas
+	// long o inteiro mais longo pq esta se calculando diferen�a entre datas
 	public long duration() {
 		long diff = checkOut.getTime() - checkIn.getTime();
 		// getTime retorna o valor em milisegundos da data
 		return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
-		// TimeUnit � um enum complexo que j� vem pronto para essas ocasioes
+		// TimeUnit um enum complexo que j� vem pronto para essas ocasioes
 	}
 
 	public String updateDates(Date checkIn, Date checkOut) {
