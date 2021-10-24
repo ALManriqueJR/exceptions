@@ -3,7 +3,6 @@ package application;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import model.entities.Reservation;
@@ -47,7 +46,7 @@ public class Program {
 			System.out.println("Error in Reservation:" + e.getMessage());
 			e.printStackTrace();
 		}
-		//exceções menores como o inputmismatchexception estão dentro de Exception>dentro de RuntimeException, logo num upcasting elas se encaixam no runtime generico aqui embaixo
+		//inputmismatchexception está contido em RuntimeException, logo, por upcasting, runTimeExp trata inputMismatch
 		catch(RuntimeException e) {
 			System.out.println("Unexpected erro occur!");
 			e.printStackTrace();
